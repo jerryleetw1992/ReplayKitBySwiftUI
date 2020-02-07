@@ -9,8 +9,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var isBool = false
+    
     var body: some View {
         Text("Hello, World!")
+            .foregroundColor(isBool ? .red : .green)
+            .onTapGesture {
+                self.isBool.toggle()
+            }
     }
 }
 
