@@ -17,25 +17,31 @@ struct ContentView: View {
     @State private var isShowPreviewVideo = false
     
     var body: some View {
-        VStack {
-            Text("Hello, World!")
-                .font(.title)
-                .foregroundColor(isBool ? .red : .green)
-                .onTapGesture {
-                    self.isBool.toggle()
+        ZStack {
+            VStack {
+                Text("Hello, World!")
+                    .font(.title)
+                    .foregroundColor(isBool ? .red : .green)
+                    .onTapGesture {
+                        self.isBool.toggle()
+                    }
+                Button(action: {
+                    if !self.isRecording {
+                        self.startRecord()
+                    } else {
+                        self.stopRecord()
+                    }
+                }) {
+                    Image(systemName: isRecording ? "stop.circle" : "video.circle")
+                        .resizable()
+                        .frame(width: 100, height: 100)
                 }
-            Button(action: {
-                if !self.isRecording {
-                    self.startRecord()
-                } else {
-                    self.stopRecord()
-                }
-            }) {
-                Image(systemName: isRecording ? "stop.circle" : "video.circle")
-                    .resizable()
-                    .frame(width: 100, height: 100)
-            }.sheet(isPresented: $isShowPreviewVideo) {
-                self.rp
+            }
+            if isShowPreviewVideo {
+                rp
+                    .transition(.move(edge: .bottom))
+                    .edgesIgnoringSafeArea(.all)
+                
             }
         }
     }
